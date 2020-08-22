@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviour
     public GameObject InvestigationUI;
     public GameObject[] InvestImages;
     public GameObject Cross;
+    public GameObject DayOverPanel;
 
     public Text dayIdText;
     #endregion
@@ -66,10 +68,7 @@ public class GameManager : MonoBehaviour
             dayId = PlayerPrefs.GetInt("DayId");
         }
         dayIdText.text = "Day " + (dayId + 1);
-    }
 
-    private void Start()
-    {
         selectedRoom = Random.Range(0, roomCount);
         if (PlayerPrefs.GetInt("LastRoomId", 0) == selectedRoom)
         {
@@ -80,6 +79,11 @@ public class GameManager : MonoBehaviour
         //FeatureController.Instance.CheckFeatures(dayId);
 
         InitializeGame();
+    }
+
+    private void Start()
+    {
+        
     }
 
     void InitializeGame()
@@ -142,18 +146,19 @@ public class GameManager : MonoBehaviour
                 RoomConfigurations[selectedRoom].SearchCamera.transform.eulerAngles.y,
                 RoomConfigurations[selectedRoom].SearchCamera.transform.eulerAngles.z
             );
-        //if (FeatureController.Instance.featureStatus[FeatureController.Features.ArrestThief])
-        //{
-        //    // Start arresting sequence
-        //    ArrestUI.SetActive(true);
-        //    RoomConfigurations[selectedRoom].HandCuff.SetActive(true);
-        //}
-        //else
-        //{
-
-        //}
-        ArrestUI.SetActive(true);
-        RoomConfigurations[selectedRoom].HandCuff.SetActive(true);
+        if (FeatureController.Instance.featureStatus[FeatureController.Features.ArrestThief])
+        {
+            // Start arresting sequence
+            ArrestUI.SetActive(true);
+            RoomConfigurations[selectedRoom].HandCuff.SetActive(true);
+        }
+        else
+        {
+            DayOverPanel.SetActive(true);
+            FeatureController.Instance.AddFeaturePercentage(dayId);
+            dayId++;
+            PlayerPrefs.SetInt("DayId", dayId);
+        }
     }
 
     IEnumerator WaitForAnim()
@@ -256,5 +261,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SecurityRoomCamera.SetActive(false);
         PlacingRoomCamera.SetActive(true);
+    }
+
+    public void ShowFireWorks()
+    {
+        RoomConfigurations[selectedRoom].SearchCamera.transform.GetChild(2).gameObject.SetActive(true);
+    }
+
+    public void NextDayButtonClick()
+    {
+        SceneManager.LoadScene("Scene_Game");
     }
 }
