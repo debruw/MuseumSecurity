@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        
+
     }
 
     void InitializeGame()
@@ -186,6 +186,10 @@ public class GameManager : MonoBehaviour
             // Arrest Thief
             Thief.GetComponent<Animator>().SetTrigger("Arrested");
             ArrestUI.SetActive(false);
+            if (!FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
+            {
+                ArrestedTextUI.transform.GetChild(0).gameObject.SetActive(false);
+            }
             ArrestedTextUI.SetActive(true);
             Stolen = RoomConfigurations[selectedRoom].StolenObjects[Random.Range(0, RoomConfigurations[selectedRoom].StolenObjects.Count)];
             Stolen.transform.position = stolenPosition.position;
@@ -195,6 +199,11 @@ public class GameManager : MonoBehaviour
                 Stolen.transform.localScale = Stolen.transform.localScale / 2;
             }
             SetInvestigateImages();
+
+            if (!FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
+            {
+                StartCoroutine(WaitAndNextDay());
+            }
         }
         else
         {
@@ -214,6 +223,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator WaitAndNextDay()
+    {
+        yield return new WaitForSeconds(2f);
+        DayOverPanel.SetActive(true);
+        FeatureController.Instance.AddFeaturePercentage(dayId);
+        dayId++;
+        PlayerPrefs.SetInt("DayId", dayId);
+    }
+
     int objectsFileNumber;
     void SetInvestigateImages()
     {
@@ -231,10 +249,20 @@ public class GameManager : MonoBehaviour
 
     public void GoToInvestigate()
     {
-        SecurityRoomCamera.SetActive(true);
-        RoomConfigurations[selectedRoom].SearchCamera.SetActive(false);
-        ArrestedTextUI.SetActive(false);
-        InvestigationUI.SetActive(true);
+        if (FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
+        {
+            SecurityRoomCamera.SetActive(true);
+            RoomConfigurations[selectedRoom].SearchCamera.SetActive(false);
+            ArrestedTextUI.SetActive(false);
+            InvestigationUI.SetActive(true);
+        }
+        else
+        {
+            DayOverPanel.SetActive(true);
+            FeatureController.Instance.AddFeaturePercentage(dayId);
+            dayId++;
+            PlayerPrefs.SetInt("DayId", dayId);
+        }
     }
 
     public Transform placingObjectPosition;
@@ -242,12 +270,23 @@ public class GameManager : MonoBehaviour
     {
         if (objectsFileNumber == fileID)
         {
-            Debug.Log("True Object");
-            transitionUI.GetComponent<Animator>().SetTrigger("StartTransition");
-            InvestigationUI.SetActive(false);
-            Stolen.transform.position = placingObjectPosition.position;
-            Stolen.transform.rotation = Quaternion.identity;
-            StartCoroutine(WaitAndGoPlacing());
+            //InvestImages[objectsFileNumber].transform.GetChild(0).gameObject.SetActive(true);
+            if (FeatureController.Instance.featureStatus[FeatureController.Features.PlaceObject])
+            {
+                Debug.Log("True Object");
+                transitionUI.GetComponent<Animator>().SetTrigger("StartTransition");
+                InvestigationUI.SetActive(false);
+                Stolen.transform.position = placingObjectPosition.position;
+                Stolen.transform.rotation = Quaternion.identity;
+                StartCoroutine(WaitAndGoPlacing());
+            }
+            else
+            {
+                DayOverPanel.SetActive(true);
+                FeatureController.Instance.AddFeaturePercentage(dayId);
+                dayId++;
+                PlayerPrefs.SetInt("DayId", dayId);
+            }
         }
         else
         {

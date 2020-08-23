@@ -24,6 +24,10 @@ public class TapControl : MonoBehaviour
         if (transform.localEulerAngles.y <= 10)
         {
             Debug.Log("bitti");
+            GameManager.Instance.DayOverPanel.SetActive(true);
+            FeatureController.Instance.AddFeaturePercentage(GameManager.Instance.dayId);
+            GameManager.Instance.dayId++;
+            PlayerPrefs.SetInt("DayId", GameManager.Instance.dayId);
         }
     }
 }

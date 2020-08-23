@@ -61,10 +61,4 @@ public class MouseDrag : MonoBehaviour
             //Debug.Log("Did not Hit");
         }
     }
-
-    IEnumerator WaitAndInvestigate()
-    {
-        yield return new WaitForSeconds(2f);
-        GameManager.Instance.GoToInvestigate();
-    }
 }
