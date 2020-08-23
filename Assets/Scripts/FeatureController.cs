@@ -27,45 +27,35 @@ public class FeatureController : MonoBehaviour
         featureStatus[Features.PlaceObject] = false;
 
         featurePercentage[Features.ArrestThief] = PlayerPrefs.GetInt("FeatureArrestThief");
-        Debug.Log(featurePercentage[Features.ArrestThief]);
         if (featurePercentage[Features.ArrestThief] > 98)
         {
-            featureStatus[Features.ArrestThief] = true;            
+            featureStatus[Features.ArrestThief] = true;
+            featureObjects[(int)Features.ArrestThief].SetActive(true);
+            if(PlayerPrefs.GetInt("feature" + Features.ArrestThief) == 1)
+            {
+                ShowParticle(Features.ArrestThief);
+            }
         }
         featurePercentage[Features.SelectFile] = PlayerPrefs.GetInt("FeatureSelectFile");
         if (featurePercentage[Features.SelectFile] > 98)
         {
             featureStatus[Features.SelectFile] = true;
+            featureObjects[(int)Features.SelectFile].SetActive(true);
+            if (PlayerPrefs.GetInt("feature" + Features.SelectFile) == 1)
+            {
+                ShowParticle(Features.SelectFile);
+            }
         }
         featurePercentage[Features.PlaceObject] = PlayerPrefs.GetInt("FeaturePlaceObject");
         if (featurePercentage[Features.PlaceObject] > 98)
         {
             featureStatus[Features.PlaceObject] = true;
+            featureObjects[(int)Features.PlaceObject].SetActive(true);
+            if (PlayerPrefs.GetInt("feature" + Features.PlaceObject) == 1)
+            {
+                ShowParticle(Features.PlaceObject);
+            }
         }
-    }
-
-    private void Start()
-    {
-        //if (GameManager.Instance.dayId < 2)
-        //{
-        //    featureImage.sprite = FeatureSprites[(int)Features.ArrestThief];
-        //    featurefade.sprite = FeatureSprites[(int)Features.ArrestThief];
-        //    Debug.Log("FeatureArrestThief: " + PlayerPrefs.GetInt("FeatureArrestThief"));
-        //    featureImage.fillAmount = PlayerPrefs.GetInt("FeatureArrestThief") / 100;
-        //    Debug.Log(featureImage.fillAmount);
-        //}
-        //if (GameManager.Instance.dayId > 1 && GameManager.Instance.dayId < 5)
-        //{
-        //    featureImage.sprite = FeatureSprites[(int)Features.PlaceObject];
-        //    featurefade.sprite = FeatureSprites[(int)Features.PlaceObject];
-        //    featureImage.fillAmount = PlayerPrefs.GetInt("FeaturePlaceObject") / 100;
-        //}
-        //if (GameManager.Instance.dayId > 4 && GameManager.Instance.dayId < 9)
-        //{
-        //    featureImage.sprite = FeatureSprites[(int)Features.PlaceObject];
-        //    featurefade.sprite = FeatureSprites[(int)Features.PlaceObject];
-        //    featureImage.fillAmount = PlayerPrefs.GetInt("FeaturePlaceObject") / 100;
-        //}
     }
 
     public enum Features
@@ -81,33 +71,14 @@ public class FeatureController : MonoBehaviour
     public Dictionary<Features, int> featurePercentage = new Dictionary<Features, int>();
     public Sprite[] FeatureSprites;
     public Image featureImage, featurefade;
-
-    public void CheckFeatures(int dayId)
-    {
-        if (dayId < 2)
-        {
-            featureStatus[Features.SelectScreen] = true;
-            featureStatus[Features.FindThief] = true;
-        }
-        if (dayId > 1 && dayId < 5)
-        {
-            featureStatus[Features.ArrestThief] = true;
-        }
-        if (dayId > 4 && dayId < 9)
-        {
-            featureStatus[Features.SelectFile] = true;
-        }
-        if (dayId > 8 && dayId < 15)
-        {
-            featureStatus[Features.PlaceObject] = true;
-        }
-    }
+    public GameObject[] featureObjects;
+    public GameObject FeatureUnlockedText;
 
     public void AddFeaturePercentage(int dayId)
     {
         if (dayId < 2)
         {
-            if(featurePercentage[Features.ArrestThief] >= 100)
+            if (featurePercentage[Features.ArrestThief] >= 100)
             {
                 return;
             }
@@ -128,10 +99,10 @@ public class FeatureController : MonoBehaviour
             featureImage.sprite = FeatureSprites[(int)Features.SelectFile];
             featurefade.sprite = FeatureSprites[(int)Features.SelectFile];
             float perc = PlayerPrefs.GetInt("FeatureSelectFile");
-            featureImage.fillAmount = perc / 100;            
-            featurePercentage[Features.SelectFile] += 34;
+            featureImage.fillAmount = perc / 100;
+            featurePercentage[Features.SelectFile] += 33;
             PlayerPrefs.SetInt("FeatureSelectFile", featurePercentage[Features.SelectFile]);
-            StartCoroutine(FillImage(Features.SelectFile, 34));
+            StartCoroutine(FillImage(Features.SelectFile, 33));
         }
         if (dayId > 4 && dayId < 9)
         {
@@ -155,12 +126,22 @@ public class FeatureController : MonoBehaviour
         {
             add--;
             featureImage.fillAmount = (featureImage.fillAmount * 100 + 1) / 100;
-            yield return new WaitForSeconds(.05f);
+            yield return new WaitForSeconds(.01f);
         }
-        if(featureImage.fillAmount > .98)
+        if (featureImage.fillAmount > .98)
         {
             featureStatus[ft] = true;
+            FeatureUnlockedText.SetActive(true);
+            SoundManager.Instance.playSound(SoundManager.GameSounds.FeatureUnlock);
             GameManager.Instance.ShowFireWorks();
+            PlayerPrefs.SetInt("feature" + ft, 1);
         }
+    }
+
+    public void ShowParticle(Features featureId)
+    {
+        Debug.Log("play stars");
+        featureObjects[(int)featureId].GetComponent<ParticleSystem>().Play();
+        PlayerPrefs.SetInt("feature" + featureId, 0);
     }
 }

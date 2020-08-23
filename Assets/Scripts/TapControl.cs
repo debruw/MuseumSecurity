@@ -24,6 +24,8 @@ public class TapControl : MonoBehaviour
         if (transform.localEulerAngles.y <= 10)
         {
             Debug.Log("bitti");
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
+            GameManager.Instance.ShowFireWorks();
             GameManager.Instance.DayOverPanel.SetActive(true);
             FeatureController.Instance.AddFeaturePercentage(GameManager.Instance.dayId);
             GameManager.Instance.dayId++;

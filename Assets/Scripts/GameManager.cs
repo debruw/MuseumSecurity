@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using TapticPlugin;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -19,6 +21,8 @@ public class GameManager : MonoBehaviour
     public GameObject Thief;
     public Transform stolenPosition;
     public Transform placePosition;
+    public GameObject soundManagerPrefab;
+    public GameObject StolenObjectEffects;
 
     public int dayId = 0;
 
@@ -33,6 +37,7 @@ public class GameManager : MonoBehaviour
     public RoomConfiguration[] RoomConfigurations;
     public GameObject SecurityRoomCamera;
     public GameObject PlacingRoomCamera;
+    public GameObject InvestigationCamera;
 
     #endregion
 
@@ -43,9 +48,10 @@ public class GameManager : MonoBehaviour
     public GameObject InvestigationUI;
     public GameObject[] InvestImages;
     public GameObject Cross;
-    public GameObject DayOverPanel;
+    public GameObject DayOverPanel, FailPanel;
+    public GameObject VibrationButton;
 
-    public Text dayIdText;
+    public TextMeshProUGUI dayIdText;
     #endregion
 
     private void Awake()
@@ -57,6 +63,13 @@ public class GameManager : MonoBehaviour
         else
         {
             _instance = this;
+        }
+        Instantiate(soundManagerPrefab);
+
+        if (!PlayerPrefs.HasKey("VIBRATION"))
+        {
+            PlayerPrefs.SetInt("VIBRATION", 1);
+            VibrationButton.GetComponent<Image>().sprite = on;
         }
 
         if (!PlayerPrefs.HasKey("DayId"))
@@ -98,6 +111,7 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitAndAlarm()
     {
         yield return new WaitForSeconds(3f);
+        SoundManager.Instance.playSound(SoundManager.GameSounds.Alarm);
         AlarmLight.GetComponent<Animator>().SetTrigger("StartAlarm");
         isAlarmed = true;
     }
@@ -109,13 +123,11 @@ public class GameManager : MonoBehaviour
             if (roomId == selectedRoom)
             {
                 transitionUI.GetComponent<Animator>().SetTrigger("StartTransition");
-                // Make thief crouch
-                Thief.GetComponent<NavMeshAgent>().isStopped = true;
-                Thief.GetComponent<NavMeshAgent>().transform.position = RoomConfigurations[selectedRoom].HidingSpots[Random.Range(0, RoomConfigurations[selectedRoom].HidingSpots.Length)].position;
-                Thief.transform.LookAt(RoomConfigurations[selectedRoom].SearchCamera.transform);
                 Debug.Log("Clicked Room : " + roomId);
                 StartCoroutine(WaitAndChangeCamera(roomId));
+
                 AlarmLight.GetComponent<Animator>().SetTrigger("StopAlarm");
+                SoundManager.Instance.stopSound(SoundManager.GameSounds.Alarm);
                 //AlarmLight.GetComponent<Animator>().enabled = false; 
             }
             else
@@ -128,6 +140,10 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitAndChangeCamera(int roomId)
     {
         yield return new WaitForSeconds(.5f);
+        // Make thief crouch
+        Thief.GetComponent<NavMeshAgent>().isStopped = true;
+        Thief.GetComponent<NavMeshAgent>().transform.position = RoomConfigurations[selectedRoom].HidingSpots[Random.Range(0, RoomConfigurations[selectedRoom].HidingSpots.Length)].position;
+        Thief.transform.LookAt(RoomConfigurations[selectedRoom].SearchCamera.transform);
         Thief.GetComponent<Animator>().SetTrigger("StopMove");
         SecurityRoomCamera.SetActive(false);
         RoomConfigurations[roomId].SearchCamera.SetActive(true);
@@ -137,6 +153,7 @@ public class GameManager : MonoBehaviour
     {
         // Open the lights
         StartCoroutine(WaitForAnim());
+        Thief.GetComponent<Animator>().SetTrigger("Surrender");
         isThiefFounded = true;
         RoomConfigurations[selectedRoom].SearchCamera.transform.LookAt(Thief.transform);
         RoomConfigurations[selectedRoom].SearchCamera.transform.eulerAngles =
@@ -154,6 +171,8 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
+            ShowFireWorks();
             DayOverPanel.SetActive(true);
             FeatureController.Instance.AddFeaturePercentage(dayId);
             dayId++;
@@ -191,9 +210,11 @@ public class GameManager : MonoBehaviour
                 ArrestedTextUI.transform.GetChild(0).gameObject.SetActive(false);
             }
             ArrestedTextUI.SetActive(true);
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Arrested);
             Stolen = RoomConfigurations[selectedRoom].StolenObjects[Random.Range(0, RoomConfigurations[selectedRoom].StolenObjects.Count)];
             Stolen.transform.position = stolenPosition.position;
             Stolen.transform.LookAt(RoomConfigurations[selectedRoom].SearchCamera.transform);
+            StolenObjectEffects.SetActive(true);
             if (Stolen.transform.localScale.x > 4)
             {
                 Stolen.transform.localScale = Stolen.transform.localScale / 2;
@@ -208,10 +229,12 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("Arrest unsuccessfull!");
-            if (ArrestTryCount >= 3)
+            if (ArrestTryCount >= 2)
             {
                 // FAİL
-
+                FailPanel.SetActive(true);
+                TapticManager.Impact(ImpactFeedback.Medium);
+                SoundManager.Instance.playSound(SoundManager.GameSounds.Lose);
             }
             else
             {
@@ -226,6 +249,8 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitAndNextDay()
     {
         yield return new WaitForSeconds(2f);
+        SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
+        ShowFireWorks();
         DayOverPanel.SetActive(true);
         FeatureController.Instance.AddFeaturePercentage(dayId);
         dayId++;
@@ -251,13 +276,15 @@ public class GameManager : MonoBehaviour
     {
         if (FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
         {
-            SecurityRoomCamera.SetActive(true);
+            InvestigationCamera.SetActive(true);
             RoomConfigurations[selectedRoom].SearchCamera.SetActive(false);
             ArrestedTextUI.SetActive(false);
             InvestigationUI.SetActive(true);
         }
         else
         {
+            SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
+            ShowFireWorks();
             DayOverPanel.SetActive(true);
             FeatureController.Instance.AddFeaturePercentage(dayId);
             dayId++;
@@ -270,7 +297,7 @@ public class GameManager : MonoBehaviour
     {
         if (objectsFileNumber == fileID)
         {
-            //InvestImages[objectsFileNumber].transform.GetChild(0).gameObject.SetActive(true);
+            InvestImages[objectsFileNumber].transform.GetChild(0).gameObject.SetActive(true);
             if (FeatureController.Instance.featureStatus[FeatureController.Features.PlaceObject])
             {
                 Debug.Log("True Object");
@@ -282,6 +309,9 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
+                ShowFireWorks();
+                InvestigationUI.SetActive(false);
                 DayOverPanel.SetActive(true);
                 FeatureController.Instance.AddFeaturePercentage(dayId);
                 dayId++;
@@ -304,11 +334,34 @@ public class GameManager : MonoBehaviour
 
     public void ShowFireWorks()
     {
+        TapticManager.Notification(NotificationFeedback.Success);
         RoomConfigurations[selectedRoom].SearchCamera.transform.GetChild(2).gameObject.SetActive(true);
     }
 
     public void NextDayButtonClick()
     {
         SceneManager.LoadScene("Scene_Game");
+    }
+
+    public void RetryButtonClick()
+    {
+        SceneManager.LoadScene("Scene_Game");
+    }
+
+    public Sprite on, off;
+    public void VibrateButtonClick()
+    {
+        if (PlayerPrefs.GetInt("VIBRATION").Equals(1))
+        {//Vibration is on
+            PlayerPrefs.SetInt("VIBRATION", 0);
+            VibrationButton.GetComponent<Image>().sprite = off;
+        }
+        else
+        {//Vibration is off
+            PlayerPrefs.SetInt("VIBRATION", 1);
+            VibrationButton.GetComponent<Image>().sprite = on;
+        }
+
+        TapticManager.Impact(ImpactFeedback.Light);
     }
 }

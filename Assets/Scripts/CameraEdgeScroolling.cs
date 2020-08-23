@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class CameraEdgeScroolling : MonoBehaviour
 {
-    public float edgeSize = 10;
+    float edgeSize;
     public float moveAmount = 10;
     public Vector2 RotationClamp;
+    private void Start()
+    {
+        edgeSize = Screen.width / 6;
+    }
 
     // Update is called once per frame
     void Update()
