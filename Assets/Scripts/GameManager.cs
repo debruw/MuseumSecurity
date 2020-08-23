@@ -22,7 +22,9 @@ public class GameManager : MonoBehaviour
     public Transform stolenPosition;
     public Transform placePosition;
     public GameObject soundManagerPrefab;
+    public GameObject tutorialManagerPrefab;
     public GameObject StolenObjectEffects;
+    TutorialController tutoCont;
 
     public int dayId = 0;
 
@@ -87,10 +89,12 @@ public class GameManager : MonoBehaviour
         {
             selectedRoom = Random.Range(0, roomCount);
         }
+        tutoCont = Instantiate(tutorialManagerPrefab).GetComponent<TutorialController>();
+        if (!PlayerPrefs.HasKey("tutorial" + TutorialController.Tutorials.ScreenClick))
+        {
+            selectedRoom = 0;
+        }
         PlayerPrefs.SetInt("LastRoomId", selectedRoom);
-
-        //FeatureController.Instance.CheckFeatures(dayId);
-
         InitializeGame();
     }
 
@@ -111,6 +115,7 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitAndAlarm()
     {
         yield return new WaitForSeconds(3f);
+        tutoCont.CheckTutorial(TutorialController.Tutorials.ScreenClick);
         SoundManager.Instance.playSound(SoundManager.GameSounds.Alarm);
         AlarmLight.GetComponent<Animator>().SetTrigger("StartAlarm");
         isAlarmed = true;
@@ -118,6 +123,7 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScreen(int roomId)
     {
+        Debug.Log("qqq");
         if (isAlarmed)
         {
             if (roomId == selectedRoom)
@@ -129,6 +135,7 @@ public class GameManager : MonoBehaviour
                 AlarmLight.GetComponent<Animator>().SetTrigger("StopAlarm");
                 SoundManager.Instance.stopSound(SoundManager.GameSounds.Alarm);
                 //AlarmLight.GetComponent<Animator>().enabled = false; 
+                tutoCont.CheckTutorial(TutorialController.Tutorials.FindThief);
             }
             else
             {
@@ -168,9 +175,11 @@ public class GameManager : MonoBehaviour
             // Start arresting sequence
             ArrestUI.SetActive(true);
             RoomConfigurations[selectedRoom].HandCuff.SetActive(true);
+            tutoCont.CheckTutorial(TutorialController.Tutorials.Arrest);
         }
         else
         {
+            tutoCont.CloseTutorials();
             SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
             ShowFireWorks();
             DayOverPanel.SetActive(true);
@@ -223,6 +232,7 @@ public class GameManager : MonoBehaviour
 
             if (!FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
             {
+                tutoCont.CloseTutorials();
                 StartCoroutine(WaitAndNextDay());
             }
         }
@@ -276,6 +286,7 @@ public class GameManager : MonoBehaviour
     {
         if (FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
         {
+            tutoCont.CheckTutorial(TutorialController.Tutorials.FileFind);
             InvestigationCamera.SetActive(true);
             RoomConfigurations[selectedRoom].SearchCamera.SetActive(false);
             ArrestedTextUI.SetActive(false);
@@ -283,6 +294,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            tutoCont.CloseTutorials();
             SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
             ShowFireWorks();
             DayOverPanel.SetActive(true);
@@ -309,6 +321,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                tutoCont.CloseTutorials();
                 SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
                 ShowFireWorks();
                 InvestigationUI.SetActive(false);
@@ -330,6 +343,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SecurityRoomCamera.SetActive(false);
         PlacingRoomCamera.SetActive(true);
+        tutoCont.CheckTutorial(TutorialController.Tutorials.PlaceObject);
     }
 
     public void ShowFireWorks()

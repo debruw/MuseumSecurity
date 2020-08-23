@@ -31,7 +31,7 @@ public class FeatureController : MonoBehaviour
         {
             featureStatus[Features.ArrestThief] = true;
             featureObjects[(int)Features.ArrestThief].SetActive(true);
-            if(PlayerPrefs.GetInt("feature" + Features.ArrestThief) == 1)
+            if (PlayerPrefs.GetInt("feature" + Features.ArrestThief) == 1)
             {
                 ShowParticle(Features.ArrestThief);
             }
@@ -56,6 +56,13 @@ public class FeatureController : MonoBehaviour
                 ShowParticle(Features.PlaceObject);
             }
         }
+        if (GameManager.Instance.dayId > 9)
+        {
+            featureImage.sprite = Congratulations;
+            featurefade.gameObject.SetActive(false);
+            percentageText.gameObject.SetActive(false);
+            featureImage.fillAmount = 1;
+        }
     }
 
     public enum Features
@@ -73,6 +80,8 @@ public class FeatureController : MonoBehaviour
     public Image featureImage, featurefade;
     public GameObject[] featureObjects;
     public GameObject FeatureUnlockedText;
+    public Sprite Congratulations;
+    public Text percentageText;
 
     public void AddFeaturePercentage(int dayId)
     {
@@ -86,6 +95,7 @@ public class FeatureController : MonoBehaviour
             featurefade.sprite = FeatureSprites[(int)Features.ArrestThief];
             float perc = PlayerPrefs.GetInt("FeatureArrestThief");
             featureImage.fillAmount = perc / 100;
+            percentageText.text = "%" + perc.ToString("#,#0.0");
             featurePercentage[Features.ArrestThief] += 50;
             PlayerPrefs.SetInt("FeatureArrestThief", featurePercentage[Features.ArrestThief]);
             StartCoroutine(FillImage(Features.ArrestThief, 50));
@@ -100,9 +110,10 @@ public class FeatureController : MonoBehaviour
             featurefade.sprite = FeatureSprites[(int)Features.SelectFile];
             float perc = PlayerPrefs.GetInt("FeatureSelectFile");
             featureImage.fillAmount = perc / 100;
-            featurePercentage[Features.SelectFile] += 33;
+            percentageText.text = "%" + perc.ToString("#,#0.0");
+            featurePercentage[Features.SelectFile] += 34;
             PlayerPrefs.SetInt("FeatureSelectFile", featurePercentage[Features.SelectFile]);
-            StartCoroutine(FillImage(Features.SelectFile, 33));
+            StartCoroutine(FillImage(Features.SelectFile, 34));
         }
         if (dayId > 4 && dayId < 9)
         {
@@ -114,21 +125,29 @@ public class FeatureController : MonoBehaviour
             featurefade.sprite = FeatureSprites[(int)Features.PlaceObject];
             float perc = PlayerPrefs.GetInt("FeaturePlaceObject");
             featureImage.fillAmount = perc / 100;
+            percentageText.text = "%" + perc.ToString("#,#0.0");
             featurePercentage[Features.PlaceObject] += 25;
             PlayerPrefs.SetInt("FeaturePlaceObject", featurePercentage[Features.PlaceObject]);
             StartCoroutine(FillImage(Features.PlaceObject, 25));
-        }
+        }        
     }
 
     IEnumerator FillImage(Features ft, int add)
     {
-        while (add > 0)
+        while (add > 1)
         {
             add--;
             featureImage.fillAmount = (featureImage.fillAmount * 100 + 1) / 100;
+            percentageText.text = "%" + (featureImage.fillAmount * 100 + 1).ToString("#,#0.0");
             yield return new WaitForSeconds(.01f);
         }
-        if (featureImage.fillAmount > .98)
+        if(featurePercentage[ft] > 100)
+        {
+            featurePercentage[ft] = 100;
+            featureImage.fillAmount = 1;
+            percentageText.text = "%" + featurePercentage[ft].ToString("#,#0.0");
+        }
+        if (featureImage.fillAmount > .95f)
         {
             featureStatus[ft] = true;
             FeatureUnlockedText.SetActive(true);
