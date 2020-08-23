@@ -11994,7 +11994,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39607847, g: 0.5137255, b: 0.74509805, a: 1}
+  m_Color: {r: 0.8867924, g: 0.86643815, b: 0.56470275, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -38252,16 +38252,16 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 6498112749538984747, guid: ff0932f3070648e439a0f593d8d11123,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 7893842162105940752, guid: ff0932f3070648e439a0f593d8d11123,
         type: 3}
       propertyPath: floatingJoystick
       value: 
       objectReference: {fileID: 1685519658}
+    - target: {fileID: 6498112749538984747, guid: ff0932f3070648e439a0f593d8d11123,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff0932f3070648e439a0f593d8d11123, type: 3}
 --- !u!1 &1677658711 stripped
@@ -38332,7 +38332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.39607847, g: 0.5137255, b: 0.74509805, a: 1}
+  m_Color: {r: 0.8862745, g: 0.8666667, b: 0.5647059, a: 1}
   m_RaycastTarget: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -40861,7 +40861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  m_Color: {r: 0.2830189, g: 0.2830189, b: 0.2830189, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -46450,26 +46450,6 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 18
       objectReference: {fileID: 0}
-    - target: {fileID: 6498112749538984747, guid: ff0932f3070648e439a0f593d8d11123,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7815635168846393656, guid: ff0932f3070648e439a0f593d8d11123,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.08
-      objectReference: {fileID: 0}
-    - target: {fileID: 7815635168846393656, guid: ff0932f3070648e439a0f593d8d11123,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.16
-      objectReference: {fileID: 0}
-    - target: {fileID: 7815635168846393656, guid: ff0932f3070648e439a0f593d8d11123,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 2.26
-      objectReference: {fileID: 0}
     - target: {fileID: 7893842162105940758, guid: ff0932f3070648e439a0f593d8d11123,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -46490,6 +46470,26 @@ PrefabInstance:
       propertyPath: floatingJoystick
       value: 
       objectReference: {fileID: 1685519658}
+    - target: {fileID: 6498112749538984747, guid: ff0932f3070648e439a0f593d8d11123,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7815635168846393656, guid: ff0932f3070648e439a0f593d8d11123,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 7815635168846393656, guid: ff0932f3070648e439a0f593d8d11123,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7815635168846393656, guid: ff0932f3070648e439a0f593d8d11123,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.26
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ff0932f3070648e439a0f593d8d11123, type: 3}
 --- !u!1 &7893842163425953398 stripped
