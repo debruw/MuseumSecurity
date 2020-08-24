@@ -170,6 +170,12 @@ public class GameManager : MonoBehaviour
                 RoomConfigurations[selectedRoom].SearchCamera.transform.eulerAngles.y,
                 RoomConfigurations[selectedRoom].SearchCamera.transform.eulerAngles.z
             );
+        StartCoroutine(WaitAndGo());
+    }
+
+    IEnumerator WaitAndGo()
+    {
+        yield return new WaitForSeconds(1f);
         if (FeatureController.Instance.featureStatus[FeatureController.Features.ArrestThief])
         {
             // Start arresting sequence
@@ -220,21 +226,25 @@ public class GameManager : MonoBehaviour
             }
             ArrestedTextUI.SetActive(true);
             SoundManager.Instance.playSound(SoundManager.GameSounds.Arrested);
-            Stolen = RoomConfigurations[selectedRoom].StolenObjects[Random.Range(0, RoomConfigurations[selectedRoom].StolenObjects.Count)];
-            Stolen.transform.position = stolenPosition.position;
-            Stolen.transform.LookAt(RoomConfigurations[selectedRoom].SearchCamera.transform);
-            StolenObjectEffects.SetActive(true);
-            if (Stolen.transform.localScale.x > 4)
-            {
-                Stolen.transform.localScale = Stolen.transform.localScale / 2;
-            }
-            SetInvestigateImages();
+
 
             if (!FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
             {
                 tutoCont.CloseTutorials();
                 StartCoroutine(WaitAndNextDay());
             }
+            if (FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
+            {
+                Stolen = RoomConfigurations[selectedRoom].StolenObjects[Random.Range(0, RoomConfigurations[selectedRoom].StolenObjects.Count)];
+                Stolen.transform.position = stolenPosition.position;
+                Stolen.transform.LookAt(RoomConfigurations[selectedRoom].SearchCamera.transform);
+                StolenObjectEffects.SetActive(true);
+                if (Stolen.transform.localScale.x > 4)
+                {
+                    Stolen.transform.localScale = Stolen.transform.localScale / 2;
+                }
+            }
+            SetInvestigateImages();
         }
         else
         {

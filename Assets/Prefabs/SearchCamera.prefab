@@ -92,6 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8aaf51b3e813ad4181533a9bda8a507, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  floatingJoystick: {fileID: 0}
+  m_Speed: 20
+  oldY: 0
 --- !u!1 &7893842162737278600
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +197,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1dae568c20132f14388000eb14d37308, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  edgeSize: 20
   moveAmount: 20
   RotationClamp: {x: 110, y: 170}
 --- !u!95 &454628462749341932
