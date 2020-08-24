@@ -56,7 +56,7 @@ public class FeatureController : MonoBehaviour
                 ShowParticle(Features.PlaceObject);
             }
         }
-        if (GameManager.Instance.dayId > 9)
+        if (GameManager.Instance.dayId > 8)
         {
             featureImage.sprite = Congratulations;
             featurefade.gameObject.SetActive(false);

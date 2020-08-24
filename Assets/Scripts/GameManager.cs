@@ -25,6 +25,7 @@ public class GameManager : MonoBehaviour
     public GameObject tutorialManagerPrefab;
     public GameObject StolenObjectEffects;
     TutorialController tutoCont;
+    public Light light1, light2;
 
     public int dayId = 0;
 
@@ -82,8 +83,9 @@ public class GameManager : MonoBehaviour
         {
             dayId = PlayerPrefs.GetInt("DayId");
         }
+        Debug.Log(dayIdText.text);
         dayIdText.text = "Day " + (dayId + 1);
-
+        Debug.Log(dayIdText.text);
         selectedRoom = Random.Range(0, roomCount);
         if (PlayerPrefs.GetInt("LastRoomId", 0) == selectedRoom)
         {
@@ -123,7 +125,6 @@ public class GameManager : MonoBehaviour
 
     public void ChangeScreen(int roomId)
     {
-        Debug.Log("qqq");
         if (isAlarmed)
         {
             if (roomId == selectedRoom)
@@ -147,6 +148,8 @@ public class GameManager : MonoBehaviour
     IEnumerator WaitAndChangeCamera(int roomId)
     {
         yield return new WaitForSeconds(.5f);
+        light1.intensity = 1.25f;
+        light2.intensity = 1.25f;
         // Make thief crouch
         Thief.GetComponent<NavMeshAgent>().isStopped = true;
         Thief.GetComponent<NavMeshAgent>().transform.position = RoomConfigurations[selectedRoom].HidingSpots[Random.Range(0, RoomConfigurations[selectedRoom].HidingSpots.Length)].position;
@@ -243,8 +246,9 @@ public class GameManager : MonoBehaviour
                 {
                     Stolen.transform.localScale = Stolen.transform.localScale / 2;
                 }
+                SetInvestigateImages();
             }
-            SetInvestigateImages();
+
         }
         else
         {
@@ -364,6 +368,7 @@ public class GameManager : MonoBehaviour
 
     public void NextDayButtonClick()
     {
+        PlayerPrefs.SetInt("UseMenu", 0);
         SceneManager.LoadScene("Scene_Game");
     }
 
@@ -387,5 +392,16 @@ public class GameManager : MonoBehaviour
         }
 
         TapticManager.Impact(ImpactFeedback.Light);
+    }
+
+    private void OnApplicationPause(bool pause)
+    {
+        Debug.Log("Pause");
+        PlayerPrefs.SetInt("UseMenu", 1);
+    }
+    private void OnApplicationQuit()
+    {
+        Debug.Log("Pause");
+        PlayerPrefs.SetInt("UseMenu", 1);
     }
 }
