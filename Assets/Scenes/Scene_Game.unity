@@ -492,12 +492,14 @@ MonoBehaviour:
   tutorialManagerPrefab: {fileID: 4670926286295272402, guid: fd87d5b6e537eae4a9ac300493ae3c04,
     type: 3}
   StolenObjectEffects: {fileID: 1968667885}
+  tutoCont: {fileID: 0}
   light1: {fileID: 705507994}
   light2: {fileID: 987966011}
   dayId: 0
   isThiefFounded: 0
   isThiefArrested: 0
   isPlaced: 0
+  isAllowPlacing: 0
   RoomConfigurations:
   - {fileID: 108829694}
   - {fileID: 550534054}
@@ -691,6 +693,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 4db58f485119fcb48b4f89777b1c8351, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &77629126
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -818,7 +821,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.98
+      value: 2.071
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -826,7 +829,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.y
@@ -838,7 +841,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_RootOrder
@@ -846,7 +849,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -1784,6 +1787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: f352136b3c82e414fbaa0746405bd6e3, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &109274310
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2003,6 +2007,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: e8fcc11b36fb5104795b4161b221536f, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &117968935
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2509,7 +2514,7 @@ PrefabInstance:
     - target: {fileID: 3643045532438890782, guid: 2ac082e6ffb0ceb44a4744ea0d077981,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.1
+      value: 0.42
       objectReference: {fileID: 0}
     - target: {fileID: 3643045532438890782, guid: 2ac082e6ffb0ceb44a4744ea0d077981,
         type: 3}
@@ -2524,12 +2529,12 @@ PrefabInstance:
     - target: {fileID: 3643045532438890782, guid: 2ac082e6ffb0ceb44a4744ea0d077981,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: 0.99539626
       objectReference: {fileID: 0}
     - target: {fileID: 3643045532438890782, guid: 2ac082e6ffb0ceb44a4744ea0d077981,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.095845714
       objectReference: {fileID: 0}
     - target: {fileID: 3643045532438890782, guid: 2ac082e6ffb0ceb44a4744ea0d077981,
         type: 3}
@@ -2544,7 +2549,7 @@ PrefabInstance:
     - target: {fileID: 3643045532438890782, guid: 2ac082e6ffb0ceb44a4744ea0d077981,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 3643045532438890782, guid: 2ac082e6ffb0ceb44a4744ea0d077981,
         type: 3}
@@ -2759,6 +2764,7 @@ GameObject:
   - component: {fileID: 197970122}
   - component: {fileID: 197970121}
   - component: {fileID: 197970123}
+  - component: {fileID: 197970124}
   m_Layer: 0
   m_Name: CameraSecurityRoom
   m_TagString: Untagged
@@ -2847,6 +2853,25 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
+--- !u!95 &197970124
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 197970119}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 92c2f2e4be895f5468d298855b8235c9, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &213733314
 GameObject:
   m_ObjectHideFlags: 0
@@ -3088,6 +3113,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 4db58f485119fcb48b4f89777b1c8351, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &234052246
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4271,7 +4297,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.26
+      value: 2.351
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4279,7 +4305,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.y
@@ -4291,7 +4317,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_RootOrder
@@ -4299,7 +4325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -4343,6 +4369,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 135348b993e64e943bfd78bc25c60919, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &307301181
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4376,6 +4403,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: f9edac55bd8021a44ba0e039b40a7abc, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &307325968
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5064,6 +5092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: bf51660d92e248f41956f833c3b0d163, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &360725077
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5777,6 +5806,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 5da241a1e53609a46b5ba40ab418d05e, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &393562244
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5847,6 +5877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &410594706
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5858,8 +5889,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4980162, y: 0.22584872, z: 1.0338116}
-  m_Center: {x: 0, y: 0.13, z: 0.000000029802322}
+  m_Size: {x: 0.4980162, y: 1.0338054, z: 0.255126}
+  m_Center: {x: 0, y: 0.13196075, z: 0.0042657703}
 --- !u!4 &413039484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8305757202213630230, guid: d698d895c46fbe545830caf0f2793d34,
@@ -8595,7 +8626,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.98
+      value: 2.071
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8603,7 +8634,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.y
@@ -8615,7 +8646,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_RootOrder
@@ -8623,7 +8654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -8929,7 +8960,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.98
+      value: 2.071
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8937,7 +8968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.y
@@ -8949,7 +8980,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_RootOrder
@@ -8957,7 +8988,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -9605,6 +9636,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: f1f6b35457dea5042b71b5cc4d829c03, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &552370509
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9728,6 +9760,25 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.025000088, y: 0.025000006, z: 0.025000006}
   m_Center: {x: 0.00012434427, y: 0.012500038, z: 0.012500677}
+--- !u!95 &558369808
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 558369802}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3585ad2f5b6241d489a0646e54c4dc38, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &558417210 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1636777569685260, guid: 46b0a710a371d495a9803b6502ce3a88,
@@ -9748,6 +9799,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 37f78714f4b790d47bfd7a25d587f5ef, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &558417212
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10458,6 +10510,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: b8c918b9e7237eb44a3b1f5a5567d59a, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &594809347
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10606,6 +10659,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 4db58f485119fcb48b4f89777b1c8351, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &607766651
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11080,6 +11134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: e8fcc11b36fb5104795b4161b221536f, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &633222381
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11113,6 +11168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 135348b993e64e943bfd78bc25c60919, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &638398889
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11367,6 +11423,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: d4c17acefc11577498c2a42c1f32ecfa, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &659942754
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11378,8 +11435,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.11046537, y: 0.26584432, z: 0.34842277}
-  m_Center: {x: 0.04495589, y: 0.12707442, z: 0.010598779}
+  m_Size: {x: 0.33353814, y: 0.26584432, z: 0.12654719}
+  m_Center: {x: 0.006029725, y: 0.12707442, z: -0.043467365}
 --- !u!1001 &665691291
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11741,6 +11798,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 5da241a1e53609a46b5ba40ab418d05e, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &686977295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17541,6 +17599,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 8e44f731095861646893a628700eb215, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &775838222
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -17823,6 +17882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 634757b0db11a854bba310727c34470c, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &786156988
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18272,6 +18332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 33e0ae0e5b64fa04da5c12685701bd8a, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &801485339
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19325,6 +19386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 37b42712364bcf34c8bef2dd8f4adb32, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &838670077
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19453,6 +19515,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &841389033
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -19464,8 +19527,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4980162, y: 0.22584872, z: 1.0338116}
-  m_Center: {x: 0, y: 0.13, z: 0.000000029802322}
+  m_Size: {x: 0.4980162, y: 1.0338054, z: 0.255126}
+  m_Center: {x: 0, y: 0.13196075, z: 0.0042657703}
 --- !u!1 &851645842 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1126868042945046, guid: 7c383af48a5fdc541ac0475afd7c1489,
@@ -19486,6 +19549,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: ebcccb76925ab704bb21ed01dbbfdc59, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &851645844
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -24589,15 +24653,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4281940230069024, guid: f8400ec78fc39344aa18803fd392e38a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4281940230069024, guid: f8400ec78fc39344aa18803fd392e38a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4281940230069024, guid: f8400ec78fc39344aa18803fd392e38a, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8400ec78fc39344aa18803fd392e38a, type: 3}
@@ -24847,7 +24911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.13
+      value: 5.11
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -24887,7 +24951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalScale.y
@@ -24895,7 +24959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
@@ -25015,6 +25079,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 4db58f485119fcb48b4f89777b1c8351, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &897476918
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25319,6 +25384,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 4db58f485119fcb48b4f89777b1c8351, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &922991983
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25784,6 +25850,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &940564212
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -25795,8 +25862,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4980162, y: 0.22584872, z: 1.0338116}
-  m_Center: {x: 0, y: 0.13, z: 0.000000029802322}
+  m_Size: {x: 0.4980162, y: 1.0338054, z: 0.255126}
+  m_Center: {x: 0, y: 0.13196075, z: 0.0042657703}
 --- !u!1 &944456624
 GameObject:
   m_ObjectHideFlags: 0
@@ -25908,17 +25975,6 @@ MonoBehaviour:
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 944456626}
-        m_MethodName: SetTrigger
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: Stop
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &944456628
@@ -26630,31 +26686,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.96
+      value: 5.43
       objectReference: {fileID: 0}
     - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.46
+      value: 4.17
       objectReference: {fileID: 0}
     - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
       propertyPath: m_LocalPosition.z
       value: -7.94
-      objectReference: {fileID: 0}
-    - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
       propertyPath: m_RootOrder
@@ -26666,10 +26706,26 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4767933163431898, guid: 75940785cec02894881375a52dcba655, type: 3}
+      propertyPath: m_LocalRotation.w
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3532629866079054139, guid: 75940785cec02894881375a52dcba655,
@@ -27450,6 +27506,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1068253248
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -27461,8 +27518,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4980162, y: 0.22584872, z: 1.0338116}
-  m_Center: {x: 0, y: 0.13, z: 0.000000029802322}
+  m_Size: {x: 0.4980162, y: 1.0338054, z: 0.255126}
+  m_Center: {x: 0, y: 0.13196075, z: 0.0042657703}
 --- !u!1 &1073036976
 GameObject:
   m_ObjectHideFlags: 0
@@ -27793,15 +27850,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4335995329347816, guid: be05f035c9997da4bb6eabfbef319f74, type: 3}
       propertyPath: m_LocalScale.x
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4335995329347816, guid: be05f035c9997da4bb6eabfbef319f74, type: 3}
       propertyPath: m_LocalScale.y
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4335995329347816, guid: be05f035c9997da4bb6eabfbef319f74, type: 3}
       propertyPath: m_LocalScale.z
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be05f035c9997da4bb6eabfbef319f74, type: 3}
@@ -28546,6 +28603,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: fdf4f332f07b48945a131a58e115aa29, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1202457192
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -28736,6 +28794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 94314c8ab9c577e47b18d24f4b0b1e08, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1210402601
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29161,6 +29220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: f352136b3c82e414fbaa0746405bd6e3, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1235647584
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -29385,6 +29445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1265202194
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30081,6 +30142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 6f05b8fecc8811e43a05510030d3c38a, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1310101330
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30181,6 +30243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 7013efa51fef4264abd67b092215537b, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1325789054
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30593,6 +30656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: d310a583a4132e9499fbc407b3e06f68, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1366908132
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30626,6 +30690,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 135348b993e64e943bfd78bc25c60919, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1372103307
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30760,6 +30825,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 4db58f485119fcb48b4f89777b1c8351, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1384902195
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32024,11 +32090,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.71
+      value: 3.33
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalRotation.y
@@ -32036,7 +32102,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalRotation.w
@@ -32048,7 +32114,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -32056,7 +32122,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalScale.x
@@ -32222,7 +32288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4274052767869268, guid: f3be3c0f0ec84594daabc5889018fc39, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4274052767869268, guid: f3be3c0f0ec84594daabc5889018fc39, type: 3}
       propertyPath: m_LocalScale.y
@@ -32230,7 +32296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4274052767869268, guid: f3be3c0f0ec84594daabc5889018fc39, type: 3}
       propertyPath: m_LocalScale.z
-      value: 2
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1063324834127650548, guid: f3be3c0f0ec84594daabc5889018fc39,
         type: 3}
@@ -32315,6 +32381,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: d4c17acefc11577498c2a42c1f32ecfa, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1463210948
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -32326,8 +32393,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.10780048, y: 0.2696641, z: 0.33729744}
-  m_Center: {x: 0.046381157, y: 0.12898432, z: 0.007624626}
+  m_Size: {x: 0.33325648, y: 0.26002344, z: 0.10925775}
+  m_Center: {x: 0.00442638, y: 0.12416392, z: -0.041947618}
 --- !u!1001 &1467631402
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33244,6 +33311,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: bf51660d92e248f41956f833c3b0d163, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1508764503
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -33721,6 +33789,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: abd8e12ba841c3942bd2295a2647287f, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1554142722
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34528,7 +34597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.26
+      value: 2.351
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -34536,7 +34605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.y
@@ -34548,7 +34617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_RootOrder
@@ -34556,7 +34625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -34600,6 +34669,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 39b732b741f2cfc4eb718f967a28f43d, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1637788564
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -34633,6 +34703,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: d0a2d055e7079aa42abda73cc45cef55, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1640941807
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40309,6 +40380,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1706622889
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40378,6 +40450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1712753825
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -40389,8 +40462,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4980162, y: 0.22584872, z: 1.0338116}
-  m_Center: {x: 0, y: 0.13, z: 0.000000029802322}
+  m_Size: {x: 0.4980162, y: 1.0338054, z: 0.255126}
+  m_Center: {x: 0, y: 0.13196075, z: 0.0042657703}
 --- !u!1001 &1713564458
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -40924,7 +40997,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1741926712}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.034, y: 1.084, z: 0.46}
+  m_LocalPosition: {x: 0.034, y: 1.084, z: 0.758}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1968667886}
@@ -41317,6 +41390,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: bf51660d92e248f41956f833c3b0d163, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1769510029
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -41785,6 +41859,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 12e4c30f8442f8646ad8f1734eedcb41, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1826687436
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42109,11 +42184,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.667
+      value: -8.646
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.083
+      value: 2.119
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -42121,19 +42196,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.3535531
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.6123726
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.5
+      value: 0.3535531
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.8660254
+      value: 0.61237264
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_RootOrder
@@ -42141,15 +42216,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 60.000004
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 60
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4868276374583854, guid: 0b653a30f4bf5da4d9c7a314eef4ffa7, type: 3}
       propertyPath: m_LocalScale.x
@@ -42483,6 +42558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 93b32946efd1ec64fb22dbb8c47bfc8f, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1867846024
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42806,6 +42882,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1888896752
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42817,8 +42894,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4980162, y: 0.22584872, z: 1.0338116}
-  m_Center: {x: 0, y: 0.13, z: 0.000000029802322}
+  m_Size: {x: 0.4980162, y: 1.0338054, z: 0.255126}
+  m_Center: {x: 0, y: 0.13196075, z: 0.0042657703}
 --- !u!1 &1889420900 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1898733311608154, guid: 75940785cec02894881375a52dcba655,
@@ -42839,6 +42916,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 776c5fd945f21be4097797a7b0c76134, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1889420902
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -42850,8 +42928,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.0919018, y: 2.9289398, z: 0.86490107}
-  m_Center: {x: 1.4482393, y: 0.0032215118, z: 0.06754947}
+  m_Size: {x: 3.0129204, y: 2.8763714, z: 0.86490107}
+  m_Center: {x: 0.013408661, y: 1.3963766, z: 0.06754947}
 --- !u!1001 &1892386785
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -43048,6 +43126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: f87bf09a724406844b3e51056b2c1917, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1909234450
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43253,6 +43332,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 1ddd2fbffc9e722428808808be38d9eb, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1932235331
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -43363,6 +43443,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 68d5683d27ec2044bbf7ac9cf8049334, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1939077848
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -44053,6 +44134,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 4f8c71cfed2aa1b49abf0448affd9266, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &1972598729
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -44620,6 +44702,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: f9bb5099ff14fc04ea4bb8e1080cadc7, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &2025575727
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45281,6 +45364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 5da241a1e53609a46b5ba40ab418d05e, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &2051484295
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45320,6 +45404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: c8f132a6fd8f23846bf2c436c5fd6465, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &2059264326
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45331,8 +45416,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4980162, y: 0.22584872, z: 1.0338116}
-  m_Center: {x: 0, y: 0.13, z: 0.000000029802322}
+  m_Size: {x: 0.4980162, y: 1.0338054, z: 0.255126}
+  m_Center: {x: 0, y: 0.13196075, z: 0.0042657703}
 --- !u!4 &2060305682 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8305757202213630230, guid: d698d895c46fbe545830caf0f2793d34,
@@ -45360,7 +45445,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 7.13
+      value: 5.11
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -45400,7 +45485,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalScale.y
@@ -45408,7 +45493,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4442785888402972, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
       propertyPath: m_LocalScale.z
-      value: 6
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8b015225cfd49ff48acd381bfa3990b4, type: 3}
@@ -45439,7 +45524,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.98
+      value: 2.071
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -45447,7 +45532,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.y
@@ -45459,7 +45544,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_RootOrder
@@ -45467,7 +45552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -45512,7 +45597,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.26
+      value: 2.351
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -45520,7 +45605,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.000000021855694
+      value: 0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.y
@@ -45532,7 +45617,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_RootOrder
@@ -45540,7 +45625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90.00001
       objectReference: {fileID: 0}
     - target: {fileID: 4476535904707432, guid: 71af532755e61c7439f07e35d89278f8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -45590,6 +45675,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 60e78a9512a9b53459bf1d8066e7785c, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &2077782435
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -45758,6 +45844,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UISprite: {fileID: 21300000, guid: 60e78a9512a9b53459bf1d8066e7785c, type: 3}
   PlacingPosition: {x: 0, y: 0, z: 0, w: 0}
+  isTurning: 0
 --- !u!65 &2092262796
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -46645,7 +46732,7 @@ PrefabInstance:
     - target: {fileID: 6136739912859911022, guid: c5a3c05ee36c08f4babce2957bab5d08,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -2.5
       objectReference: {fileID: 0}
     - target: {fileID: 6136739912859911022, guid: c5a3c05ee36c08f4babce2957bab5d08,
         type: 3}
@@ -46655,7 +46742,7 @@ PrefabInstance:
     - target: {fileID: 6136739912859911022, guid: c5a3c05ee36c08f4babce2957bab5d08,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 6136739912859911022, guid: c5a3c05ee36c08f4babce2957bab5d08,
         type: 3}

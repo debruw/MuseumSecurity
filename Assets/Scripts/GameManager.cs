@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     public GameObject soundManagerPrefab;
     public GameObject tutorialManagerPrefab;
     public GameObject StolenObjectEffects;
-    TutorialController tutoCont;
+    public TutorialController tutoCont;
     public Light light1, light2;
 
     public int dayId = 0;
@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour
     public bool isThiefFounded = false;
     public bool isThiefArrested = false;
     public bool isPlaced = false;
+    public bool isAllowPlacing = false;
     #endregion
 
     #region Room Objets
@@ -83,9 +84,7 @@ public class GameManager : MonoBehaviour
         {
             dayId = PlayerPrefs.GetInt("DayId");
         }
-        Debug.Log(dayIdText.text);
         dayIdText.text = "Day " + (dayId + 1);
-        Debug.Log(dayIdText.text);
         selectedRoom = Random.Range(0, roomCount);
         if (PlayerPrefs.GetInt("LastRoomId", 0) == selectedRoom)
         {
@@ -116,11 +115,13 @@ public class GameManager : MonoBehaviour
 
     IEnumerator WaitAndAlarm()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2f);
         tutoCont.CheckTutorial(TutorialController.Tutorials.ScreenClick);
         SoundManager.Instance.playSound(SoundManager.GameSounds.Alarm);
         AlarmLight.GetComponent<Animator>().SetTrigger("StartAlarm");
         isAlarmed = true;
+        yield return new WaitForSeconds(.5f);
+        SecurityRoomCamera.GetComponent<Animator>().SetTrigger("Security1");
     }
 
     public void ChangeScreen(int roomId)
@@ -129,6 +130,8 @@ public class GameManager : MonoBehaviour
         {
             if (roomId == selectedRoom)
             {
+                SecurityRoomCamera.GetComponent<Animator>().SetInteger("SecurityToRoom", roomId);
+
                 transitionUI.GetComponent<Animator>().SetTrigger("StartTransition");
                 Debug.Log("Clicked Room : " + roomId);
                 StartCoroutine(WaitAndChangeCamera(roomId));
@@ -215,40 +218,8 @@ public class GameManager : MonoBehaviour
         if (ArrestUIPointer.transform.eulerAngles.z > 0 && ArrestUIPointer.transform.eulerAngles.z < 16
             || ArrestUIPointer.transform.eulerAngles.z < 360 && ArrestUIPointer.transform.eulerAngles.z > 344)
         {
-            Debug.Log("Arrest succesfull");
-            isThiefArrested = true;
-            // Make a puff
-            RoomConfigurations[selectedRoom].SearchCamera.transform.GetChild(0).gameObject.SetActive(true);
-            RoomConfigurations[selectedRoom].HandCuff.SetActive(false);
-            // Arrest Thief
-            Thief.GetComponent<Animator>().SetTrigger("Arrested");
-            ArrestUI.SetActive(false);
-            if (!FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
-            {
-                ArrestedTextUI.transform.GetChild(0).gameObject.SetActive(false);
-            }
-            ArrestedTextUI.SetActive(true);
-            SoundManager.Instance.playSound(SoundManager.GameSounds.Arrested);
-
-
-            if (!FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
-            {
-                tutoCont.CloseTutorials();
-                StartCoroutine(WaitAndNextDay());
-            }
-            if (FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
-            {
-                Stolen = RoomConfigurations[selectedRoom].StolenObjects[Random.Range(0, RoomConfigurations[selectedRoom].StolenObjects.Count)];
-                Stolen.transform.position = stolenPosition.position;
-                Stolen.transform.LookAt(RoomConfigurations[selectedRoom].SearchCamera.transform);
-                StolenObjectEffects.SetActive(true);
-                if (Stolen.transform.localScale.x > 4)
-                {
-                    Stolen.transform.localScale = Stolen.transform.localScale / 2;
-                }
-                SetInvestigateImages();
-            }
-
+            ArrestUI.GetComponent<Animator>().enabled = false;
+            StartCoroutine(WaitAndArrest());                       
         }
         else
         {
@@ -270,9 +241,47 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    IEnumerator WaitAndArrest()
+    {
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Arrest succesfull");
+        isThiefArrested = true;
+        // Make a puff
+        RoomConfigurations[selectedRoom].SearchCamera.transform.GetChild(0).gameObject.SetActive(true);
+        RoomConfigurations[selectedRoom].HandCuff.SetActive(false);
+        // Arrest Thief
+        Thief.GetComponent<Animator>().SetTrigger("Arrested");
+               
+        if (!FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
+        {
+            ArrestedTextUI.transform.GetChild(0).gameObject.SetActive(false);
+        }
+        ArrestedTextUI.SetActive(true);
+        SoundManager.Instance.playSound(SoundManager.GameSounds.Arrested);
+
+        if (!FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
+        {
+            tutoCont.CloseTutorials();
+            StartCoroutine(WaitAndNextDay());
+        }
+        if (FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
+        {
+            Stolen = RoomConfigurations[selectedRoom].StolenObjects[Random.Range(0, RoomConfigurations[selectedRoom].StolenObjects.Count)];
+            Stolen.transform.position = stolenPosition.position;
+            Stolen.transform.LookAt(RoomConfigurations[selectedRoom].SearchCamera.transform);
+            Stolen.GetComponent<Prop>().isTurning = true;
+            StolenObjectEffects.SetActive(true);
+            if (Stolen.transform.localScale.x > 4)
+            {
+                Stolen.transform.localScale = Stolen.transform.localScale / 2;
+            }
+            SetInvestigateImages();
+        }
+    }
+
     IEnumerator WaitAndNextDay()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
         SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
         ShowFireWorks();
         DayOverPanel.SetActive(true);
@@ -300,6 +309,8 @@ public class GameManager : MonoBehaviour
     {
         if (FeatureController.Instance.featureStatus[FeatureController.Features.SelectFile])
         {
+            ArrestUI.SetActive(false);
+            Stolen.GetComponent<Prop>().isTurning = false;
             tutoCont.CheckTutorial(TutorialController.Tutorials.FileFind);
             InvestigationCamera.SetActive(true);
             RoomConfigurations[selectedRoom].SearchCamera.SetActive(false);
@@ -308,6 +319,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
+            ArrestUI.SetActive(false);
             tutoCont.CloseTutorials();
             SoundManager.Instance.playSound(SoundManager.GameSounds.Win);
             ShowFireWorks();
@@ -357,6 +369,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         SecurityRoomCamera.SetActive(false);
         PlacingRoomCamera.SetActive(true);
+        isAllowPlacing = true;
         tutoCont.CheckTutorial(TutorialController.Tutorials.PlaceObject);
     }
 
@@ -399,6 +412,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Pause");
         PlayerPrefs.SetInt("UseMenu", 1);
     }
+
     private void OnApplicationQuit()
     {
         Debug.Log("Pause");

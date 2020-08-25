@@ -7,23 +7,37 @@ public class Prop : MonoBehaviour
     public Sprite UISprite;
     Camera cam;
     public Quaternion PlacingPosition;
+    public bool isTurning = false;
 
     private void Start()
     {
         cam = GameManager.Instance.PlacingRoomCamera.GetComponent<Camera>();
     }
 
+    private void Update()
+    {
+        if (isTurning)
+        {
+            transform.Rotate(0, 1, 0);
+        }
+    }
+
+
     private void OnMouseDrag()
     {
-        if(GameManager.Instance.isPlaced)
+        if (GameManager.Instance.isPlaced || !GameManager.Instance.isAllowPlacing)
         {
             return;
         }
-        transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 5));
+        transform.position = cam.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, Input.mousePosition.y, 7));
     }
 
     private void OnMouseUp()
     {
+        if (!GameManager.Instance.isAllowPlacing)
+        {
+            return;
+        }
         int layerMask = 1 << 8;
         //layerMask = ~layerMask;
         RaycastHit hit;

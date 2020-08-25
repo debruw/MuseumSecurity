@@ -95,7 +95,7 @@ public class FeatureController : MonoBehaviour
             featurefade.sprite = FeatureSprites[(int)Features.ArrestThief];
             float perc = PlayerPrefs.GetInt("FeatureArrestThief");
             featureImage.fillAmount = perc / 100;
-            percentageText.text = "%" + perc.ToString("#,#0.0");
+            percentageText.text = "%" + perc.ToString("#0");
             featurePercentage[Features.ArrestThief] += 50;
             PlayerPrefs.SetInt("FeatureArrestThief", featurePercentage[Features.ArrestThief]);
             StartCoroutine(FillImage(Features.ArrestThief, 50));
@@ -110,7 +110,7 @@ public class FeatureController : MonoBehaviour
             featurefade.sprite = FeatureSprites[(int)Features.SelectFile];
             float perc = PlayerPrefs.GetInt("FeatureSelectFile");
             featureImage.fillAmount = perc / 100;
-            percentageText.text = "%" + perc.ToString("#,#0.0");
+            percentageText.text = "%" + perc.ToString("#0");
             featurePercentage[Features.SelectFile] += 34;
             PlayerPrefs.SetInt("FeatureSelectFile", featurePercentage[Features.SelectFile]);
             StartCoroutine(FillImage(Features.SelectFile, 34));
@@ -125,7 +125,7 @@ public class FeatureController : MonoBehaviour
             featurefade.sprite = FeatureSprites[(int)Features.PlaceObject];
             float perc = PlayerPrefs.GetInt("FeaturePlaceObject");
             featureImage.fillAmount = perc / 100;
-            percentageText.text = "%" + perc.ToString("#,#0.0");
+            percentageText.text = "%" + perc.ToString("#0");
             featurePercentage[Features.PlaceObject] += 25;
             PlayerPrefs.SetInt("FeaturePlaceObject", featurePercentage[Features.PlaceObject]);
             StartCoroutine(FillImage(Features.PlaceObject, 25));
@@ -138,14 +138,14 @@ public class FeatureController : MonoBehaviour
         {
             add--;
             featureImage.fillAmount = (featureImage.fillAmount * 100 + 1) / 100;
-            percentageText.text = "%" + (featureImage.fillAmount * 100 + 1).ToString("#,#0.0");
+            percentageText.text = "%" + (featureImage.fillAmount * 100 + 1).ToString("#0");
             yield return new WaitForSeconds(.01f);
         }
         if(featurePercentage[ft] > 100)
         {
             featurePercentage[ft] = 100;
             featureImage.fillAmount = 1;
-            percentageText.text = "%" + featurePercentage[ft].ToString("#,#0.0");
+            percentageText.text = "%" + featurePercentage[ft].ToString("#0");
         }
         if (featureImage.fillAmount > .95f)
         {
